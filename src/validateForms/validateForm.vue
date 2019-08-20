@@ -95,7 +95,12 @@ export default {
             n["label"],
             {
               initialValue: n["value"],
-              rules: [{ required: true, message: n["message"] }]
+              rules: [
+                { required: true, message: n["message"] },
+                {
+                  validator: this.validator
+                }
+              ]
             }
           ];
 
@@ -117,7 +122,12 @@ export default {
       this.valiateProps["label"],
       {
         initialValue: this.valiateProps["value"],
-        rules: [{ required: true, message: this.valiateProps["message"] }]
+        rules: [
+          { required: true, message: this.valiateProps["message"] },
+          {
+            validator: this.validator
+          }
+        ]
       }
     ];
   },
@@ -153,6 +163,11 @@ export default {
     });
   },
   methods: {
+    validator(rule, value, callback) {
+      this.valiateProps["validater"]
+        ? this.valiateProps["validater"](rule, value, callback)
+        : callback();
+    },
     changeValue(e, dateString) {
       const {
         form: { validateFields }

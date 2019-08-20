@@ -40,7 +40,8 @@ export default {
           label: "grade",
           labelName: "年级",
           message: "请填写",
-          value: ""
+          value: "",
+          validater: this.validater
         },
         test: {
           type: "select",
@@ -63,6 +64,14 @@ export default {
     };
   },
   methods: {
+    // 函数校验
+    validater(rules, value, calllback) {
+      if (/111/.test(value)) {
+        calllback("错误了你"); // 将会以此文案进行提示
+      } else {
+        calllback(); // 使用默认文案提示
+      }
+    },
     // 编辑弹框确定
     editHandleOk(e) {
       // **提交按钮绑定事件
