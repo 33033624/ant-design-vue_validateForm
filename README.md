@@ -48,7 +48,7 @@ rules: {
       }
 ```
 
-### 5.获取校验后的数据, this.validateOk 是我们插件中已经注册号的方法，直接使用后会返回两个回调参数 validate 是校验结果，obj 是通过传递的 rules 返回的值, 例如 4 时候的数据，obj = {grade: value, ....},这样方便我们获取 key 以及 value 来进行接口参数组装以及传递
+### 5.获取校验后的数据, this.validateOk 是我们插件中已经注册的方法，直接使用后会返回两个回调参数 validate 是校验结果，obj 是通过传递的 rules 返回的值, 例如 4 时候的数据，obj = {grade: value, ....},这样方便我们获取 key 以及 value 来进行接口参数组装以及传递
 
 ```javascript
 this.validateOk((validate, obj) => {
