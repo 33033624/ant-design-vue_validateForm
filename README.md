@@ -2,7 +2,7 @@
 简介：基于ant-desing-vue的表单校验复杂度进行封装简化（目前只支持非空校验）
 
 # 安装
-npm install ant-desing-vue_validateform --save
+npm install ant-design-vue_validateform --save
 
 # 使用
 
