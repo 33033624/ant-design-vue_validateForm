@@ -16,7 +16,7 @@ npm install ant-desing-vue_validateform --save
 ### 2.其次赋值form给当前引用组件的form元素（ant-design-vue_validateform中已经注册了form,直接用就可以）
 
 ```javascript
- <a-form class="ant-advanced-search-form" :form="form">
+ <a-form :form="form">
 ```
 
 ### 3.使用校验表单组件(其中validateInput和form均以存在不需要重新注册)
@@ -31,10 +31,10 @@ npm install ant-desing-vue_validateform --save
 ### 4.data中注册rules， type类型为input|| select || datePicker || rangePicker || checkboxGroup，rules中的每一项的key必须与内部的label保持一致
 ```javascript
 rules: {
-        grade: {
+        test: {
           type: 'input', // 校验的组件类型
-          label: 'grade', // 与key需要保持一致
-          labelName: '年级', // label显示的名称
+          label: 'test', // 与key需要保持一致
+          labelName: '测试', // label显示的名称
           message: '请填写', // 校验触发的时候展示的文案
           value: '', // 默认传递的值
           validateStatus: false // 默认需要传递false
@@ -46,8 +46,9 @@ rules: {
 ```javascript
  this.validateOk((validate, obj) => {
     if (!validate) {
-      return this.$message.error('请将信息填写完整')
+      console.log('校验未通过')
+    } else {
+       console.log(obj) // {grade: '123'}
     }
-    validate && this.$emit('add', obj['grade'])
   })
   ```
