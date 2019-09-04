@@ -1,6 +1,6 @@
 # ant-design-vue_validateForm
 
-简介：基于 ant-desing-vue 的表单校验复杂度进行封装简化（目前支持非空校验和函数校验）
+介绍： 基于 ant-desing-vue 的表单校验复杂度进行封装简化（目前支持非空校验和函数校验）
 
 # 安装
 
