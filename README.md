@@ -81,7 +81,7 @@ rules: {
           message: '请填写', // 校验触发的时候展示的文案
           value: '', // 默认传递的值
           validateStatus: false, // 默认需要传递false
-          validator: this.validator
+          validater: this.validater
         }
       }
 ```
