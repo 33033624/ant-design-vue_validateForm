@@ -1,53 +1,58 @@
-<template lang="html">
-  <a-form-item :label="valiateProps['labelName']" :labelCol="{ span: 8 }">
-    <a-input
-      v-decorator="decorator"
-      @input="changeValue"
-      @blur="changeValue"
-      v-if="valiateProps['type'] === 'input'"
-    />
-    <a-select
-      v-decorator="decorator"
-      placeholder="请选择"
-      @change="changeValue"
-      v-if="valiateProps['type'] === 'select'"
-      :allowClear="true"
-    >
-      <a-select-option
-        v-for="(i, k) in valiateProps['selectList']"
-        :key="k"
-        :value="i['value']"
-      >
+<template>
+  <a-form-item :label="valiateProps['labelName']"
+               :labelCol="{ span: 8 }">
+    <a-input v-decorator="decorator"
+             @input="changeValue"
+             @blur="changeValue"
+             v-if="valiateProps['type'] === 'input'" />
+
+    <a-select v-decorator="decorator"
+              placeholder="请选择"
+              @change="changeValue"
+              v-if="valiateProps['type'] === 'select'"
+              :allowClear="true">
+      <a-select-option v-for="(i, k) in valiateProps['selectList']"
+                       :key="k"
+                       :value="i['value']">
         {{ i["name"] }}
       </a-select-option>
     </a-select>
-    <a-date-picker
-      v-decorator="decorator"
-      v-if="valiateProps['type'] === 'datePicker'"
-      @change="changeValue"
-    />
-    <a-range-picker
-      v-decorator="decorator"
-      v-if="valiateProps['type'] === 'rangePicker'"
-      @change="changeValue"
-    />
-    <a-checkbox-group
-      v-decorator="decorator"
-      v-if="valiateProps['type'] === 'checkboxGroup'"
-      @change="changeValue"
-    >
+    <a-select v-decorator="decorator"
+              mode="multiple"
+              placeholder="请选择"
+              @change="changeValue"
+              v-if="valiateProps['type'] === 'selectMore'"
+              :allowClear="true">
+      <a-select-option v-for="(i, k) in valiateProps['selectList']"
+                       :key="k"
+                       :value="i['value']">
+        {{ i["name"] }}
+      </a-select-option>
+    </a-select>
+    <a-date-picker v-decorator="decorator"
+                   v-if="valiateProps['type'] === 'datePicker'"
+                   @change="changeValue" />
+    <a-range-picker v-decorator="decorator"
+                    v-if="valiateProps['type'] === 'rangePicker'"
+                    @change="changeValue" />
+    <a-checkbox-group v-decorator="decorator"
+                      v-if="valiateProps['type'] === 'checkboxGroup'"
+                      @change="changeValue">
       <a-row>
-        <a-col
-          :span="8"
-          v-for="(item, index) in valiateProps.selectList.length"
-          :key="index"
-        >
+        <a-col :span="8"
+               v-for="(item, index) in valiateProps.selectList.length"
+               :key="index">
           <a-checkbox :value="valiateProps.selectList[index].value">
             {{ valiateProps.selectList[index].name }}
           </a-checkbox>
         </a-col>
       </a-row>
     </a-checkbox-group>
+    <a-textarea v-decorator="decorator"
+                @input="changeValue"
+                @blur="changeValue"
+                v-if="valiateProps['type'] === 'textarea'"
+                :rows="1" />
   </a-form-item>
 </template>
 
@@ -64,12 +69,8 @@ export default {
           labelName: "",
           message: "",
           value: "",
-          selectList: [
-            {
-              name: "测试",
-              value: "2"
-            }
-          ]
+          selectList: [],
+          required: true
         };
       }
     },
@@ -96,7 +97,7 @@ export default {
             {
               initialValue: n["value"],
               rules: [
-                { required: true, message: n["message"] },
+                { required: n["required"], message: n["message"] },
                 {
                   validator: this.validator
                 }
@@ -123,7 +124,10 @@ export default {
       {
         initialValue: this.valiateProps["value"],
         rules: [
-          { required: true, message: this.valiateProps["message"] },
+          {
+            required: this.valiateProps["required"],
+            message: this.valiateProps["message"]
+          },
           {
             validator: this.validator
           }
@@ -150,10 +154,15 @@ export default {
         value = this.valiateProps["value"];
       } else if (this.valiateProps["type"] === "datePicker") {
         value = this.valiateProps["value"];
+        console.log(value, "value=========================================>");
       } else if (this.valiateProps["type"] === "checkboxGroup") {
         value = this.valiateProps["value"];
       } else if (this.valiateProps["type"] === "rangePicker") {
         value = [this.valiateProps["value"][0], this.valiateProps["value"][1]];
+      } else if (this.valiateProps["type"] === "textarea") {
+        value = this.valiateProps["value"];
+      } else if (this.valiateProps["type"] === "selectMore") {
+        value = this.valiateProps["value"];
       }
       this.$emit("validate", {
         validateStatus,
@@ -186,11 +195,18 @@ export default {
             value = e.target.value;
           } else if (this.valiateProps["type"] === "select") {
             value = e;
+            if (this.valiateProps.fun) {
+              this.valiateProps.fun(e);
+            }
           } else if (this.valiateProps["type"] === "datePicker") {
             value = e;
           } else if (this.valiateProps["type"] === "checkboxGroup") {
             value = e;
           } else if (this.valiateProps["type"] === "rangePicker") {
+            value = e;
+          } else if (this.valiateProps["type"] === "textarea") {
+            value = e.target.value;
+          } else if (this.valiateProps["type"] === "selectMore") {
             value = e;
           }
           this.$emit("validate", {
